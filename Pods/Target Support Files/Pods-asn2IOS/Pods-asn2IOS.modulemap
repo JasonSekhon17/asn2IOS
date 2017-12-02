@@ -1,0 +1,6 @@
+framework module Pods_asn2IOS {
+  umbrella header "Pods-asn2IOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,17 +7,24 @@
 //
 
 import UIKit
+import MarqueeLabel
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-
-
+    @IBOutlet weak var detailDescriptionLabel: MarqueeLabel!
+    
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detailItem {
             if let label = detailDescriptionLabel {
-                label.text = detail.description
+                label.marqueeType = .MLContinuous
+                label.scrollDuration = 60
+                label.fadeLength = 10.0
+                label.leadingBuffer = 30.0
+                label.trailingBuffer = 20.0
+                label.lineBreakMode = .byWordWrapping // or NSLineBreakMode.ByWordWrapping
+                label.numberOfLines = 0
+                label.text = String(detail.crawlText.characters.filter { !"\t\r\n".characters.contains($0) })
             }
         }
     }
@@ -33,7 +40,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: NSDate? {
+    var detailItem: Movie? {
         didSet {
             // Update the view.
             configureView()
